@@ -1,0 +1,5 @@
+{
+  "name": "I learn math",
+  "description": "A Progressive Web App that provides math quizzes on various topics to help students learn and practice. The app is fully functional offline.",
+  "requestFramePermissions": []
+}
