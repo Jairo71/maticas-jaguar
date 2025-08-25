@@ -1,0 +1,87 @@
+{
+  "Fracciones y Decimales": [
+    { "id": 1, "pregunta": "¿A qué fracción corresponde la longitud del segmento azul si A es igual a 1?", "imagen": "/Reactivo1.png", "opciones": [{ "id": "a", "texto": "3/5" }, { "id": "b", "texto": "7/10" }, { "id": "c", "texto": "1/2" }, { "id": "d", "texto": "7/8" }], "respuestaCorrecta": "b",
+  "explicacion": "La unidad (de 0 a A) está dividida en 10 partes iguales. El segmento azul ocupa 7 de esas 10 partes, lo que corresponde a la fracción 7/10." },
+    { "id": 2, "pregunta": "¿A qué fracción corresponde la longitud del segmento azul si B es igual a 1?", "imagen": "/Reactivo2.png", "opciones": [{ "id": "a", "texto": "7/14" }, { "id": "b", "texto": "1/2" }, { "id": "c", "texto": "7/8" }, { "id": "d", "texto": "7/10" }], "respuestaCorrecta": "a" },
+    { "id": 3, "pregunta": "¿A qué fracción corresponde la longitud del segmento azul si C es igual a 1?", "imagen": "/Reactivo3.png", "opciones": [{ "id": "a", "texto": "1/2" }, { "id": "b", "texto": "3/5" }, { "id": "c", "texto": "7/18" }, { "id": "d", "texto": "7/8" }], "respuestaCorrecta": "c" },
+    { "id": 4, "pregunta": "¿Cuál es el número decimal indicado por la flecha roja en la recta numérica?", "imagen": "/Reactivo4.png", "opciones": [{ "id": "a", "texto": "5.91" }, { "id": "b", "texto": "5.99" }, { "id": "c", "texto": "5.19" }, { "id": "d", "texto": "5.999" }], "respuestaCorrecta": "b" },
+    { "id": 5, "pregunta": "En la siguiente recta numérica, ¿qué número mixto representa la ubicación de la flecha azul?", "imagen": "/Reactivo5.png", "opciones": [{ "id": "a", "texto": "1 2/10" }, { "id": "b", "texto": "1 1/6" }, { "id": "c", "texto": "1 1/4" }, { "id": "d", "texto": "1 1/8" }], "respuestaCorrecta": "a" },
+    { "id": 6, "pregunta": "Observa la figura. ¿Qué fracción, en su forma más simple, representa la parte pintada?", "imagen": "/Reactivo6.png", "opciones": [{ "id": "a", "texto": "3/6" }, { "id": "b", "texto": "3/5" }, { "id": "c", "texto": "2/3" }, { "id": "d", "texto": "1/2" }], "respuestaCorrecta": "d" },
+    { "id": 7, "pregunta": "¿Cuál es el número que corresponde al punto señalado con la flecha azul?", "imagen": "/Reactivo7.png", "opciones": [{ "id": "a", "texto": "2/3" }, { "id": "b", "texto": "2/5" }, { "id": "c", "texto": "3 1/3" }, { "id": "d", "texto": "0.66" }], "respuestaCorrecta": "c" },
+    { "id": 8, "pregunta": "¿Qué número decimal representa el punto k en la recta numérica?", "imagen": "/Reactivo8.png", "opciones": [{ "id": "a", "texto": "6.7" }, { "id": "b", "texto": "6 7/10" }, { "id": "c", "texto": "6.07" }, { "id": "d", "texto": "6.71" }], "respuestaCorrecta": "c" },
+    { "id": 9, "pregunta": "¿Qué número mixto representa la flecha en la recta numérica?", "imagen": "/Reactivo9.png", "opciones": [{ "id": "a", "texto": "3.35" }, { "id": "b", "texto": "3 345/1000" }, { "id": "c", "texto": "3.5" }, { "id": "d", "texto": "3 35/100" }], "respuestaCorrecta": "b" },
+    {
+      "id": 10,
+      "pregunta": "¿Qué números mixtos representan las flechas en la recta numérica?",
+      "imagen": "/Reactivo10.png",
+      "opciones": [
+        { "id": "a", "texto": "2 3/4 y 3 3/10" },
+        { "id": "b", "texto": "2 4/10 y 3 3/4" },
+        { "id": "c", "texto": "2 4/10 y 3 6/10" },
+        { "id": "d", "texto": "2 3/4 y 3 8/10" }
+      ],
+      "respuestaCorrecta": "c"
+    }
+  ],
+  "Sucesiones": [
+    { "id": 11, "pregunta": "¿Cuántos cuadritos tendrá la figura 6?", "imagen": "/Reactivo1_suce.png", "opciones": [{ "id": "a", "texto": "25" }, { "id": "b", "texto": "27" }, { "id": "c", "texto": "23" }, { "id": "d", "texto": "24" }], "respuestaCorrecta": "a" },
+    { "id": 12, "pregunta": "¿Cuántos círculos tendrá la figura 7?", "imagen": "/Reactivo2_suce.png", "opciones": [{ "id": "a", "texto": "19" }, { "id": "b", "texto": "22" }, { "id": "c", "texto": "23" }, { "id": "d", "texto": "24" }], "respuestaCorrecta": "b" },
+    { "id": 13, "pregunta": "¿Cuál es la regla para encontrar el número de cuadritos que tendrá la figura n?", "imagen": "/Reactivo3_suce.png", "opciones": [{ "id": "a", "texto": "n²" }, { "id": "b", "texto": "n + 2" }, { "id": "c", "texto": "2n - 1" }, { "id": "d", "texto": "3n - 2" }], "respuestaCorrecta": "c" },
+    { "id": 14, "pregunta": "¿Cuántos puntos tendrá la figura numero 10?", "imagen": "/Reactivo4_suce.png", "opciones": [{ "id": "a", "texto": "38" }, { "id": "b", "texto": "39" }, { "id": "c", "texto": "40" }, { "id": "d", "texto": "41" }], "respuestaCorrecta": "c" },
+    { "id": 15, "pregunta": "¿Cuál es la regla para encontrar el número de triángulos iguales que tendrá la figura n?", "imagen": "/Reactivo5_suce.png", "opciones": [{ "id": "a", "texto": "3n - 1" }, { "id": "b", "texto": "n(n+1)" }, { "id": "c", "texto": "n²" }, { "id": "d", "texto": "2n" }], "respuestaCorrecta": "c" },
+    { "id": 16, "pregunta": "¿Cuál es la regla para encontrar el número de cubos que tendrá la figura n?", "imagen": "/Reactivo6_suce.png", "opciones": [{ "id": "a", "texto": "2n" }, { "id": "b", "texto": "2n + 1" }, { "id": "c", "texto": "3n - 1" }, { "id": "d", "texto": "4n - 2" }], "respuestaCorrecta": "b" },
+    { "id": 17, "pregunta": "¿Cuántos puntos tendrá la figura 9 para seguir la secuencia?", "imagen": "/Reactivo7_suce.png", "opciones": [{ "id": "a", "texto": "43" }, { "id": "b", "texto": "44" }, { "id": "c", "texto": "45" }, { "id": "d", "texto": "46" }], "respuestaCorrecta": "d" },
+    { "id": 18, "pregunta": "¿Cuál es la expresión algebraica que se usó para completar la tabla?", "imagen": "/Reactivo8_suce.png", "opciones": [{ "id": "a", "texto": "e=3f - 1" }, { "id": "b", "texto": "e=3f" }, { "id": "c", "texto": "e=3f + 2" }, { "id": "d", "texto": "e=3f + 1" }], "respuestaCorrecta": "c" },
+    { "id": 19, "pregunta": "¿Cuál es la expresión algebraica que se usó para completar la tabla?", "imagen": "/Reactivo9_suce.png", "opciones": [{ "id": "a", "texto": "p=2n - 1" }, { "id": "b", "texto": "p=2n + 1" }, { "id": "c", "texto": "p=2n + 2" }, { "id": "d", "texto": "p=n + 1" }], "respuestaCorrecta": "c" },
+    { "id": 20, "pregunta": "¿Cuál es la expresión algebraica que se usó para completar la tabla?", "imagen": "/Reactivo10_suce.png", "opciones": [{ "id": "a", "texto": "y=3x - 1" }, { "id": "b", "texto": "y=3x + 5" }, { "id": "c", "texto": "y=3x + 2" }, { "id": "d", "texto": "y=x + 4" }], "respuestaCorrecta": "b" }
+  ],
+  "Perímetros": [
+    { "id": 21, "pregunta": "¿Cuál es la expresión para el perímetro de la figura?", "imagen": "/Reactivo1_peri.png", "opciones": [{ "id": "a", "texto": "8m+2mn+n" }, { "id": "b", "texto": "8m+4n" }, { "id": "c", "texto": "5n+4m+n" }, { "id": "d", "texto": "10m+4n" }], "respuestaCorrecta": "d" },
+    { "id": 22, "pregunta": "¿Cuál es la expresión para el perímetro de la figura?", "imagen": "/Reactivo2_peri.png", "opciones": [{ "id": "a", "texto": "16y + 11" }, { "id": "b", "texto": "16y + 12" }, { "id": "c", "texto": "16y + 18" }, { "id": "d", "texto": "16y + 19" }], "respuestaCorrecta": "c" },
+    { "id": 23, "pregunta": "¿Cuál es la expresión para el perímetro de la figura?", "imagen": "/Reactivo3_peri.png", "opciones": [{ "id": "a", "texto": "6x + 7" }, { "id": "b", "texto": "6x + 14" }, { "id": "c", "texto": "6x + 10" }, { "id": "d", "texto": "5x + 12" }], "respuestaCorrecta": "b" },
+    { "id": 24, "pregunta": "¿Cuál es la expresión para el perímetro de la figura?", "imagen": "/Reactivo4_peri.png", "opciones": [{ "id": "a", "texto": "8x + 10" }, { "id": "b", "texto": "8x + 11" }, { "id": "c", "texto": "8x + 6" }, { "id": "d", "texto": "8x + 12" }], "respuestaCorrecta": "c" },
+    { "id": 25, "pregunta": "¿Cuál es la expresión para el perímetro de la figura?", "imagen": "/Reactivo5_peri.png", "opciones": [{ "id": "a", "texto": "7x + 8" }, { "id": "b", "texto": "7x - 8" }, { "id": "c", "texto": "7x + 6" }, { "id": "d", "texto": "7x + 7" }], "respuestaCorrecta": "a" },
+    { "id": 26, "pregunta": "¿Cuánto mide el perímetro de la figura, considera π=3.14?", "imagen": "/Reactivo6_peri.png", "opciones": [{ "id": "a", "texto": "21.56 cm" }, { "id": "b", "texto": "27.85 cm" }, { "id": "c", "texto": "24.13 cm" }, { "id": "d", "texto": "23.75 cm" }], "respuestaCorrecta": "b" },
+    { "id": 27, "pregunta": "¿Cuánto mide el perímetro de la línea azul, considera π=3.14?", "imagen": "/Reactivo7_peri.png", "opciones": [{ "id": "a", "texto": "33.12 cm" }, { "id": "b", "texto": "34.53 cm" }, { "id": "c", "texto": "26.84 cm" }, { "id": "d", "texto": "27.15 cm" }], "respuestaCorrecta": "c" },
+    { "id": 28, "pregunta": "¿Cuánto mide el perímetro de la parte roja, considera π=3.14?", "imagen": "/Reactivo8_peri.png", "opciones": [{ "id": "a", "texto": "18.84 cm" }, { "id": "b", "texto": "20.14 cm" }, { "id": "c", "texto": "19.4 cm" }, { "id": "d", "texto": "21.8 cm" }], "respuestaCorrecta": "a" },
+    { "id": 29, "pregunta": "¿Cuánto mide el perímetro de la figura sombreada, considera π=3.14?", "imagen": "/Reactivo9_peri.png", "opciones": [{ "id": "a", "texto": "20.14 cm" }, { "id": "b", "texto": "18.84 cm" }, { "id": "c", "texto": "19.4 cm" }, { "id": "d", "texto": "21.8 cm" }], "respuestaCorrecta": "b" },
+    { "id": 30, "pregunta": "¿Cuánto mide el perímetro de la parte azul, considera π=3.14?", "imagen": "/Reactivo10_peri.png", "opciones": [{ "id": "a", "texto": "21.12 cm" }, { "id": "b", "texto": "21.58 cm" }, { "id": "c", "texto": "21.42 cm" }, { "id": "d", "texto": "21.76 cm" }], "respuestaCorrecta": "c" }
+  ],
+  "Jerarquía de Operaciones": [
+    { "id": 31, "pregunta": "{[(-4 + 6) × 3] - 5} ÷ (-1)", "opciones": [{ "id": "a", "texto": "1" }, { "id": "b", "texto": "-1" }, { "id": "c", "texto": "3" }, { "id": "d", "texto": "-3" }], "respuestaCorrecta": "b",
+    "explicacion": "Primero se resuelve el paréntesis (-4+6=2). Luego la multiplicación (2×3=6). Después la resta (6-5=1). Finalmente, la división (1÷-1 = -1)." },
+    { "id": 32, "pregunta": "[(-8÷2) + 5 ] × { 3 - [1 + (−2) ] }", "opciones": [{ "id": "a", "texto": "9" }, { "id": "b", "texto": "-3" }, { "id": "c", "texto": "6" }, { "id": "d", "texto": "4" }], "respuestaCorrecta": "d" },
+    { "id": 33, "pregunta": "-3+ [4×(2-5)]-{-6÷2}", "opciones": [{ "id": "a", "texto": "-6" }, { "id": "b", "texto": "-12" }, { "id": "c", "texto": "0" }, { "id": "d", "texto": "-9" }], "respuestaCorrecta": "b" },
+    { "id": 34, "pregunta": "{[(-10÷2) × (−3) ] + 4 } - [ (-8) ÷ (-4)]", "opciones": [{ "id": "a", "texto": "17" }, { "id": "b", "texto": "15" }, { "id": "c", "texto": "13" }, { "id": "d", "texto": "11" }], "respuestaCorrecta": "a" },
+    { "id": 35, "pregunta": "[(-6+2)×3] ÷ { 2 + [ 1 - (-1) ] }", "opciones": [{ "id": "a", "texto": "-6" }, { "id": "b", "texto": "-3" }, { "id": "c", "texto": "3" }, { "id": "d", "texto": "6" }], "respuestaCorrecta": "b" },
+    { "id": 36, "pregunta": "{[(-5-1)÷3] + 2 }× [4-(-2)]", "opciones": [{ "id": "a", "texto": "24" }, { "id": "b", "texto": "0" }, { "id": "c", "texto": "6" }, { "id": "d", "texto": "4" }], "respuestaCorrecta": "b" },
+    { "id": 37, "pregunta": "[(-12÷4) +5]×{-3-[-1-(-2)]}", "opciones": [{ "id": "a", "texto": "0" }, { "id": "b", "texto": "-4" }, { "id": "c", "texto": "4" }, { "id": "d", "texto": "-8" }], "respuestaCorrecta": "d" },
+    { "id": 38, "pregunta": "{[(-6÷2) + 4]×3} - [5 - (−1) ]", "opciones": [{ "id": "a", "texto": "-3" }, { "id": "b", "texto": "0" }, { "id": "c", "texto": "3" }, { "id": "d", "texto": "6" }], "respuestaCorrecta": "a" },
+    { "id": 39, "pregunta": "[(-15÷5) + 2 ] × { 4 - [ 3 – (-1)]}", "opciones": [{ "id": "a", "texto": "0" }, { "id": "b", "texto": "-2" }, { "id": "c", "texto": "2" }, { "id": "d", "texto": "-4" }], "respuestaCorrecta": "a" },
+    { "id": 40, "pregunta": "{[(-10÷2) + 3 ] × (-2) } - [ (-4) ÷ (-2) ]", "opciones": [{ "id": "a", "texto": "4" }, { "id": "b", "texto": "2" }, { "id": "c", "texto": "8" }, { "id": "d", "texto": "10" }], "respuestaCorrecta": "b" }
+  ],
+  "Lenguaje Algebraico": [
+    { "id": 41, "pregunta": "El total de siete veces un número y 14 veces la diferencia entre el número y 21", "opciones": [{ "id": "a", "texto": "7n + 14(n - 21)" }, { "id": "b", "texto": "7n + 14n - 21" }, { "id": "c", "texto": "7n + 14(21 - n)" }, { "id": "d", "texto": "7n - 14(n - 21)" }], "respuestaCorrecta": "a" },
+    { "id": 42, "pregunta": "Seis menos un tercio de la suma de un número y nueve", "opciones": [{ "id": "a", "texto": "6 - (n+9)/3" }, { "id": "b", "texto": "6 - n/3 + 9" }, { "id": "c", "texto": "(6-n+9)/3" }, { "id": "d", "texto": "6 - (1/3)n + 9" }], "respuestaCorrecta": "a" },
+    { "id": 43, "pregunta": "Diez menos que el triple de la diferencia entre un número y 15", "opciones": [{ "id": "a", "texto": "3n - 15 - 10" }, { "id": "b", "texto": "3(n - 15) - 10" }, { "id": "c", "texto": "3(n - 15) + 10" }, { "id": "d", "texto": "3n - 15 + 10" }], "respuestaCorrecta": "b" },
+    { "id": 44, "pregunta": "La mitad de un número incrementado en 8", "opciones": [{ "id": "a", "texto": "n/2 + 8" }, { "id": "b", "texto": "(n+8)/2" }, { "id": "c", "texto": "n/2 - 8" }, { "id": "d", "texto": "2n + 8" }], "respuestaCorrecta": "a" },
+    { "id": 45, "pregunta": "El doble de la suma de un número y 7", "opciones": [{ "id": "a", "texto": "2n + 7" }, { "id": "b", "texto": "2(n + 7)" }, { "id": "c", "texto": "2n + 14" }, { "id": "d", "texto": "n + 14" }], "respuestaCorrecta": "b" },
+    { "id": 46, "pregunta": "Cinco menos que el cuadrado de un número.", "opciones": [{ "id": "a", "texto": "5 - n²" }, { "id": "b", "texto": "n² - 5" }, { "id": "c", "texto": "(5 - n)²" }, { "id": "d", "texto": "(n - 5)²" }], "respuestaCorrecta": "b" },
+    { "id": 47, "pregunta": "Tres veces la diferencia entre un número y 4", "opciones": [{ "id": "a", "texto": "3n - 4" }, { "id": "b", "texto": "3(n - 4)" }, { "id": "c", "texto": "3(4 - n)" }, { "id": "d", "texto": "3n + 4" }], "respuestaCorrecta": "b" },
+    { "id": 48, "pregunta": "Un número elevado al cuadrado más el doble del mismo número", "opciones": [{ "id": "a", "texto": "n² + n" }, { "id": "b", "texto": "n² + 2n" }, { "id": "c", "texto": "(n + 2)²" }, { "id": "d", "texto": "2n² + n" }], "respuestaCorrecta": "b" },
+    { "id": 49, "pregunta": "La tercera parte de un número disminuido en 6", "opciones": [{ "id": "a", "texto": "n/3 - 6" }, { "id": "b", "texto": "(n-6)/3" }, { "id": "c", "texto": "3n - 6" }, { "id": "d", "texto": "(n-6)/3" }], "respuestaCorrecta": "a" },
+    { "id": 50, "pregunta": "El producto de 4 y la suma de un número con 9", "opciones": [{ "id": "a", "texto": "4n + 9" }, { "id": "b", "texto": "4(n + 9)" }, { "id": "c", "texto": "4 + n + 9" }, { "id": "d", "texto": "4n + 36" }], "respuestaCorrecta": "b" }
+  ],
+  "Ecuaciones": [
+    { "id": 51, "pregunta": "¿Cuál es el valor de m en la ecuación? 3(m + 2) = 21", "opciones": [{ "id": "a", "texto": "m = 3" }, { "id": "b", "texto": "m = 5" }, { "id": "c", "texto": "m = 7" }, { "id": "d", "texto": "m = 9" }], "respuestaCorrecta": "b" },
+    { "id": 52, "pregunta": "¿Cuál es el valor de y en la ecuación? 2y - 4 = 3(y - 3)", "opciones": [{ "id": "a", "texto": "y = 2" }, { "id": "b", "texto": "y = 3" }, { "id": "c", "texto": "y = 4" }, { "id": "d", "texto": "y = 5" }], "respuestaCorrecta": "d" },
+    { "id": 53, "pregunta": "¿Cuál es el valor de z en la ecuación? (z-1)/2 + 3 = 7", "opciones": [{ "id": "a", "texto": "z = 6" }, { "id": "b", "texto": "z = 7" }, { "id": "c", "texto": "z = 8" }, { "id": "d", "texto": "z = 9" }], "respuestaCorrecta": "d" },
+    { "id": 54, "pregunta": "¿Cuál es el valor de a en la ecuación? 4a + 6 = 2(a + 8)", "opciones": [{ "id": "a", "texto": "a = 3" }, { "id": "b", "texto": "a = 4" }, { "id": "c", "texto": "a = 5" }, { "id": "d", "texto": "a = 6" }], "respuestaCorrecta": "c" },
+    { "id": 55, "pregunta": "¿Cuál es el valor de b en la ecuación? 5(b - 2) = 3b + 4", "opciones": [{ "id": "a", "texto": "b = 6" }, { "id": "b", "texto": "b = 7" }, { "id": "c", "texto": "b = 8" }, { "id": "d", "texto": "b = 9" }], "respuestaCorrecta": "b" },
+    { "id": 56, "pregunta": "¿Cuál es el valor de x en la ecuación? (2x+1)/3 = (x-2)/2", "opciones": [{ "id": "a", "texto": "x = 2" }, { "id": "b", "texto": "x = -8" }, { "id": "c", "texto": "x = 7" }, { "id": "d", "texto": "x = 5" }], "respuestaCorrecta": "b" },
+    { "id": 57, "pregunta": "¿Cuál es el valor de p en la ecuación? 6 - (p + 1) = 2p - 4", "opciones": [{ "id": "a", "texto": "p = 2" }, { "id": "b", "texto": "p = 3" }, { "id": "c", "texto": "p = 4" }, { "id": "d", "texto": "p = 5" }], "respuestaCorrecta": "b" },
+    { "id": 58, "pregunta": "¿Cuál es el valor de q en la ecuación? 3(q - 4) + 2 = 5(q - 2)", "opciones": [{ "id": "a", "texto": "q = 1" }, { "id": "b", "texto": "q = 2" }, { "id": "c", "texto": "q = 0" }, { "id": "d", "texto": "q = 4" }], "respuestaCorrecta": "c" },
+    { "id": 59, "pregunta": "¿Cuál es el valor de r en la ecuación? 2r + 5 = 3(r + 1) - 2", "opciones": [{ "id": "a", "texto": "r = 2" }, { "id": "b", "texto": "r = 3" }, { "id": "c", "texto": "r = 4" }, { "id": "d", "texto": "r = 5" }], "respuestaCorrecta": "c" },
+    { "id": 60, "pregunta": "¿Cuál es el valor de m en la ecuación? (m+2)/3 + 7 = m + 1", "opciones": [{ "id": "a", "texto": "m = 8" }, { "id": "b", "texto": "m = 10" }, { "id": "c", "texto": "m = 11" }, { "id": "d", "texto": "m = 12" }], "respuestaCorrecta": "b" }
+  ]
+}

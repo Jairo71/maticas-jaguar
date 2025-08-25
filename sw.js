@@ -2,60 +2,44 @@
 const CACHE_NAME = 'i-learn-math-cache-v1';
 const urlsToCache = [
     '/',
-    'index.html',
-    'manifest.json',
-    'sw.js',
-    'https://cdn.tailwindcss.com',
-    'https://unpkg.com/react@18/umd/react.development.js',
-    'https://unpkg.com/react-dom@18/umd/react-dom.development.js',
-    'https://unpkg.com/@babel/standalone/babel.min.js',
-    'https://fonts.googleapis.com/css2?family=Fredoka+One&family=Roboto:wght@400;700&display=swap',
-    'https://freetousesounds.com/wp-content/uploads/2022/04/Coin-Sound-Effect.mp3',
-    
-    // App and Topic Icons
-    'https://drive.google.com/thumbnail?id=1kHsPdkw6Tq4MsocpIqixwhsidsGqKcfU',
-    'https://drive.google.com/thumbnail?id=1mgiCE1FPr0EOazTWViVxzpdN9dm_Os1X',
-    'https://drive.google.com/thumbnail?id=1nBU4DSqhgCN4olAW01afFoXlUmvgZzaR',
-    'https://drive.google.com/thumbnail?id=1Ow2_W0aQRTMaP4ooOyxPOFYhST_kAnpO',
-    'https://drive.google.com/thumbnail?id=1DnLCVx4QPZ0rm1bP8RL8gFKOmVn78P-N',
-    'https://drive.google.com/thumbnail?id=1oXgdQfi4z2wIlcQM8gkd1yctIRosFj6a',
-    'https://drive.google.com/thumbnail?id=1ww5d2iV5zgWlo7UBVFjlYX57u9KgCOiR',
-
-    // Perímetros Images
-    'https://drive.google.com/thumbnail?id=1zne2lDF4aFNrpGoDj-mKVSVV7uH1wXjh',
-    'https://drive.google.com/thumbnail?id=1nEIzQJrlyI0MlA3NMhI3RLKJ6sET-MYh',
-    'https://drive.google.com/thumbnail?id=1dhLPO6b_mmUeA6hGoSCAbDzX3x0pgRdz',
-    'https://drive.google.com/thumbnail?id=1X0wvjdku0sLDLeryfobbXHSAbJc5AaQt',
-    'https://drive.google.com/thumbnail?id=1gtTH58QJk_dx7JAyivuggvGn26Q5lyVG',
-    'https://drive.google.com/thumbnail?id=1FLG_HVx86-RY6UbXX8w2rW1TEurUoJeq',
-    'https://drive.google.com/thumbnail?id=14_4XR3p7OdY5cEfCEJiYUdf3-yHKMClI',
-    'https://drive.google.com/thumbnail?id=1e4MVLCYbvmp38diwIJO9i8H0bR10HWS4',
-    'https://drive.google.com/thumbnail?id=1DnLCVx4QPZ0rm1bP8RL8gFKOmVn78P-N',
-    'https://drive.google.com/thumbnail?id=1UK_3du_qKGEC-f8-r7rG7R5yjjVII9J-',
-
-    // Sucesiones Images
-    'https://drive.google.com/thumbnail?id=1fShUMc7DFJc0s2EWxMse_HMCJUxy_Rl-',
-    'https://drive.google.com/thumbnail?id=13AudCE57GqFf61JlVULXyOKGN5Bi3gCa',
-    'https://drive.google.com/thumbnail?id=1-gILkSfzliMdXyRLZL_7Adxdbkswxq-r',
-    'https://drive.google.com/thumbnail?id=1GNEcXFDc2bIwO4Hs44QlWXFHoXIkI_sJ',
-    'https://drive.google.com/thumbnail?id=1R0XRs4GWaa0ZiWix6tuaqNv-0chyJGQ_',
-    'https://drive.google.com/thumbnail?id=1zFYtsrBODmmIE_nNLDrjKfQWhMYIignr',
-    'https://drive.google.com/thumbnail?id=1XxxK5RddIX69OERTLt3tNdzru9v4kJ-N',
-    'https://drive.google.com/thumbnail?id=10us2shyn2oFalegQFXrnyYOeVvJ0nzvC',
-    'https://drive.google.com/thumbnail?id=1HeNAudFRHmJaz_BQPgU4ixMaF_cf3-l6',
-    'https://drive.google.com/thumbnail?id=1vjxZbI8Y7OucL3ejrPTD83yKdjti9KEp',
-
-    // Números en la Recta Images
-    'https://drive.google.com/thumbnail?id=1-X5BsH-D12S_VGN9RCHGrChPVC5cHGiW',
-    'https://drive.google.com/thumbnail?id=1wR-teorlaVAyg6KiG9DeDpK2-tHPww1N',
-    'https://drive.google.com/thumbnail?id=1q8uHin33S_NiGH0Nsjbuu1kuhWPphdhB',
-    'https://drive.google.com/thumbnail?id=1H2ih_vHz79LIWf5U1J6L7qH6FA5Kxvvd',
-    'https://drive.google.com/thumbnail?id=1IUk5QLx_AlMvxxiyVfFsy5Vhg7ks-_tP',
-    'https://drive.google.com/thumbnail?id=1SLaooaOe1fgKWTiD15X6FAVW9G9OQE0E',
-    'https://drive.google.com/thumbnail?id=1bDsAA0UnD0IQPc9RxOOzrMUt0Ywdmxfy',
-    'https://drive.google.com/thumbnail?id=19oNgpuL7_MGVnepAZXfnIGEBiTekpcqp',
-    'https://drive.google.com/thumbnail?id=1pc-K5q-NthQGySH-X9aHjFjBd6P_h2_m',
-    'https://drive.google.com/thumbnail?id=1r0QmLKejM4slwvh6Rjrl0o9ELZXCFP-F'
+  'index.html',
+  'manifest.json',
+  'sw.js',
+  '/assets/icono-pequeño.png',
+  '/assets/icono-grande.png',
+  // --- Perímetros ---
+  '/assets/imagenes/Reactivo1_peri.png',
+  '/assets/imagenes/Reactivo2_peri.png',
+  '/assets/imagenes/Reactivo3_peri.png',
+  '/assets/imagenes/Reactivo4_peri.png',
+  '/assets/imagenes/Reactivo5_peri.png',
+  '/assets/imagenes/Reactivo6_peri.png',
+  '/assets/imagenes/Reactivo7_peri.png',
+  '/assets/imagenes/Reactivo8_peri.png',
+  '/assets/imagenes/Reactivo9_peri.png',
+  '/assets/imagenes/Reactivo10_peri.png',
+  // --- Sucesiones ---
+  '/assets/imagenes/Reactivo1_suce.png',
+  '/assets/imagenes/Reactivo2_suce.png',
+  '/assets/imagenes/Reactivo3_suce.png',
+  '/assets/imagenes/Reactivo4_suce.png',
+  '/assets/imagenes/Reactivo5_suce.png',
+  '/assets/imagenes/Reactivo6_suce.png',
+  '/assets/imagenes/Reactivo7_suce.png',
+  '/assets/imagenes/Reactivo8_suce.png',
+  '/assets/imagenes/Reactivo9_suce.png',
+  '/assets/imagenes/Reactivo10_suce.png',
+  // --- Otros temas (Reactivo1.png, etc.) ---
+  '/assets/imagenes/Reactivo1.png',
+  '/assets/imagenes/Reactivo2.png',
+  '/assets/imagenes/Reactivo3.png',
+  '/assets/imagenes/Reactivo4.png',
+  '/assets/imagenes/Reactivo5.png',
+  '/assets/imagenes/Reactivo6.png',
+  '/assets/imagenes/Reactivo7.png',
+  '/assets/imagenes/Reactivo8.png',
+  '/assets/imagenes/Reactivo9.png',
+  '/assets/imagenes/Reactivo10.png'
 ];
 
 self.addEventListener('install', event => {
