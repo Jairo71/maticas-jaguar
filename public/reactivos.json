@@ -15,10 +15,10 @@
       "pregunta": "¿Qué números mixtos representan las flechas en la recta numérica?",
       "imagen": "/Reactivo10.png",
       "opciones": [
-        { "id": "a", "texto": "2 3/4 y 3 3/10" },
-        { "id": "b", "texto": "2 4/10 y 3 3/4" },
-        { "id": "c", "texto": "2 4/10 y 3 6/10" },
-        { "id": "d", "texto": "2 3/4 y 3 8/10" }
+        { "id": "a", "texto": "2 1/5 y 3 2/5" },
+        { "id": "b", "texto": "2 2/5 y 3 4/5" },
+        { "id": "c", "texto": "2 2/5 y 3 3/5" },
+        { "id": "d", "texto": "2 3/5 y 3 2/5" }
       ],
       "respuestaCorrecta": "c"
     }

@@ -90,8 +90,8 @@ export const reactivosConExplicacion = [
         pregunta: "¿Qué número mixto representa la flecha en la recta numérica?",
         imagen: "Reactivo9.png",
         opciones: ["3.35", "3 345/1000", "3.5", "3 35/100"],
-        respuesta_correcta: "3 35/100",
-        explicacion: "La flecha indica el número decimal 3.35. Para convertirlo a número mixto: La parte entera es 3. La parte decimal, 0.35, se lee como 'treinta y cinco centésimas', que se escribe como la fracción 35/100. Uniendo ambas partes, obtenemos 3 35/100."
+        respuesta_correcta: "3 345/1000",
+        explicacion: "La flecha está a la mitad entre 3.34 y 3.35, lo que corresponde a 3.345. Para convertirlo a número mixto, la parte entera es 3. La parte decimal es .345, que se escribe como la fracción 345/1000. El resultado es 3 345/1000."
     },
     {
         id: "recta_numerica_10",
@@ -99,9 +99,9 @@ export const reactivosConExplicacion = [
         tema: "Recta Numérica",
         pregunta: "¿Qué números mixtos representan las flechas en la recta numérica?",
         imagen: "Reactivo10.png",
-        opciones: ["2 3/4 y 3 3/10", "2 4/10 y 3 3/4", "2 4/10 y 3 6/10", "2 4/10 y 3 8/10"],
-        respuesta_correcta: "2 4/10 y 3 6/10",
-        explicacion: "Primera flecha: Está después del 2. El espacio entre 2 y 3 está dividido en 10 partes, y la flecha está en la cuarta, así que es 2 4/10. Segunda flecha: Está después del 3. El espacio entre 3 y 4 está dividido en 10 partes, y la flecha está en la sexta, así que es 3 6/10."
+        opciones: ["2 1/5 y 3 2/5", "2 2/5 y 3 4/5", "2 2/5 y 3 3/5", "2 3/5 y 3 2/5"],
+        respuesta_correcta: "2 2/5 y 3 3/5",
+        explicacion: "Análisis de la recta: Entre cada número entero (de 2 a 3, y de 3 a 4), el espacio está dividido en 5 partes iguales. Por lo tanto, cada marca representa un quinto (1/5). Primera flecha: Está entre 2 y 3, en la segunda marca. Esto representa el número 2 y 2/5. Segunda flecha: Está entre 3 y 4, en la tercera marca. Esto representa el número 3 y 3/5."
     },
     
     // === TEMA: Sucesiones (10 reactivos) ===
@@ -112,8 +112,8 @@ export const reactivosConExplicacion = [
         pregunta: "¿Cuántos cuadritos tendrá la figura 6?",
         imagen: "Reactivo1_suce.png",
         opciones: ["25", "27", "23", "36"],
-        respuesta_correcta: "36",
-        explicacion: "La secuencia de cuadritos sigue el patrón de los números al cuadrado. Figura 1: 1²=1. Figura 2: 2²=4. Figura 3: 3²=9. Figura 4: 4²=16. La regla es n². Para la figura 6, el número de cuadritos será 6² = 36. (Nota: La opción '25' corresponde a la figura 5)."
+        respuesta_correcta: "25",
+        explicacion: "La secuencia de cuadritos sigue el patrón de 4n+1. Para la figura 6, el número de cuadritos será 4(6)+1 = 25."
     },
     {
         id: "sucesiones_2",
@@ -142,8 +142,8 @@ export const reactivosConExplicacion = [
         pregunta: "¿Cuántos puntos tendrá la figura numero 10?",
         imagen: "Reactivo4_suce.png",
         opciones: ["38", "39", "40", "41"],
-        respuesta_correcta: "41",
-        explicacion: "Veamos el incremento. Figura 1: 5 puntos. Figura 2: 9 puntos (+4). Figura 3: 13 puntos (+4). La secuencia es una progresión aritmética que aumenta de 4 en 4. La regla es 4n+1. Para la figura 10: (4 * 10) + 1 = 40 + 1 = 41 puntos."
+        respuesta_correcta: "40",
+        explicacion: "La secuencia de puntos sigue el patrón de 4n. Para la figura 10, el número de puntos será 4(10) = 40."
     },
     {
         id: "sucesiones_5",
@@ -221,7 +221,7 @@ export const reactivosConExplicacion = [
         id: "perimetro_2",
         materia: "Matemáticas",
         tema: "Perímetro",
-        pregunta: "¿Cuál es la expresión para el perímetro de la figura?",
+        pregunta: "¿Cuál es la expresión para el perímetro del trapecio isosceles?",
         imagen: "Reactivo2_peri.png",
         opciones: ["16y + 11", "16y + 12", "16y + 18", "16y + 19"],
         respuesta_correcta: "16y + 18",
@@ -257,16 +257,16 @@ export const reactivosConExplicacion = [
         respuesta_correcta: "7x + 8",
         explicacion: "Sumamos los tres lados: (x+2) + (3x+4) + (3x+2). Paso 1: Sumamos los términos con 'x': x + 3x + 3x = 7x. Paso 2: Sumamos los números: 2 + 4 + 2 = 8. La expresión del perímetro es 7x + 8."
     },
-    {
-        id: "perimetro_6",
-        materia: "Matemáticas",
-        tema: "Perímetro",
-        pregunta: "¿Cuánto mide el perímetro de la figura, considera π=3.14?",
-        imagen: "Reactivo6_peri.png",
-        opciones: ["21.56 cm", "27.85 cm", "24.13 cm", "23.75 cm"],
-        respuesta_correcta: "27.85 cm",
-        explicacion: "El perímetro se compone de dos lados rectos de 5 cm y media circunferencia. Paso 1: Perímetro de la media circunferencia. El diámetro es 6 cm. La fórmula es (π * d) / 2 = (3.14 * 6) / 2 = 18.84 / 2 = 9.42 cm. Paso 2: Sumamos todo: 5 cm + 5 cm + 9.42 cm = 19.42 cm. Error en el cálculo, revisemos: La figura tiene tres lados rectos (5, 6, 5) y media circunferencia de radio 3 (diámetro 6). Perímetro = 5+6+5 + (π*6)/2 = 16 + 9.42 = 25.42. Reanalizando la imagen, es un semicírculo y dos radios. Perímetro = 9.42cm + 5cm + 5cm = 19.42cm. Las opciones son incorrectas para la descripción dada, asumiendo una figura compuesta diferente. Si la figura es un rectángulo con un semicírculo encima: 5+6+5 + media circunferencia = 16+9.42 = 25.42. Ninguna opción coincide. La opción b) 27.85 parece venir de 5 + 9.42 + 5 + 8.43? No. Es probable que la figura y las opciones tengan una discrepancia. La opción más cercana a un cálculo lógico sería otra. Asumiremos que la figura tiene lados 5, 5 y una base que no es 6 sino 8.85. Sin una imagen clara, el problema es ambiguo. La opción correcta provista es 27.85"
-    },
+            {
+            id: "perimetro_6",
+            materia: "Matemáticas",
+            tema: "Perímetro",
+            pregunta: "¿Cuánto mide el perímetro de la figura, considera π=3.14?",
+            imagen: "Reactivo6_peri.png",
+            opciones: ["21.56 cm", "27.85 cm", "24.13 cm", "23.75 cm"],
+            respuesta_correcta: "27.85 cm",
+            explicacion: "Análisis paso a paso: 1. Descompón la figura: El perímetro es la suma de todos los segmentos y curvas del contorno. 2. Suma los lados rectos: La figura tiene dos lados horizontales de 7 cm y dos lados inclinados de 3 cm. Su suma es: 7 + 7 + 3 + 3 = 20 cm. 3. Calcula la longitud de la curva: Se incluye una media circunferencia de 5 cm de diámetro. Su longitud es (π × 5) / 2 = 7.85 cm. 4. Calcula el perímetro total: Se suma todo: 20 cm (lados rectos) + 7.85 cm (curva). 5. Resultado: El perímetro total es 27.85 cm."
+        },
     {
         id: "perimetro_7",
         materia: "Matemáticas",
@@ -583,4 +583,4 @@ export const reactivosConExplicacion = [
         respuesta_correcta: "m = 10",
         explicacion: "Paso 1: Para eliminar la fracción, multiplicamos toda la ecuación por 3: 3*[(m+2)/3] + 3*7 = 3*(m+1). Esto nos da: (m+2) + 21 = 3m + 3. Paso 2: Simplificamos: m + 23 = 3m + 3. Paso 3: Restamos 'm' de ambos lados: 23 = 2m + 3. Paso 4: Restamos 3: 20 = 2m. Paso 5: Dividimos entre 2: m = 10."
     }
-];
+  ];

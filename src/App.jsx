@@ -22,6 +22,7 @@ function App() {
   const [vistaActual, setVistaActual] = useState('menu');
   const [quizActual, setQuizActual] = useState({ tema: null, reactivos: [] });
   const [resultadoActual, setResultadoActual] = useState({ puntuacion: 0, historial: [] });
+  const [revisionRealizada, setRevisionRealizada] = useState(false);
 
   const handleSelectTema = (nombreTema) => {
     const reactivosFiltrados = reactivosConExplicacion.filter(r => r.tema === nombreTema);
@@ -29,6 +30,7 @@ function App() {
     const reactivosParaQuiz = reactivosBarajados.slice(0, 10);
     setQuizActual({ tema: nombreTema, reactivos: reactivosParaQuiz });
     setVistaActual('quiz');
+    setRevisionRealizada(false); // Reiniciamos el estado de revisión
   };
 
   const handleQuizFinish = (puntuacion, historial) => {
@@ -38,6 +40,11 @@ function App() {
 
   const handleVerRevision = () => {
     setVistaActual('revision');
+  };
+
+  const handleVolverDeRevision = () => {
+    setVistaActual('resultados');
+    setRevisionRealizada(true); // Marcamos que la revisión fue hecha
   };
 
   const handleGoToSend = () => {
@@ -54,7 +61,7 @@ function App() {
         <Quiz
           reactivos={quizActual.reactivos}
           onQuizFinish={handleQuizFinish}
-          onGoToMenu={handleGoToMenu} // ¡CAMBIO IMPORTANTE! Pasamos la función a Quiz.
+          onGoToMenu={handleGoToMenu}
         />
       </div>
     );
@@ -69,6 +76,8 @@ function App() {
           onRestart={handleGoToMenu}
           onVerRevision={handleVerRevision}
           onEnviar={handleGoToSend}
+          revisionRealizada={revisionRealizada} // Pasamos el estado
+          tema={quizActual.tema}
         />
       </div>
     );
@@ -79,7 +88,8 @@ function App() {
       <div className="App">
         <PantallaRevision
           historial={resultadoActual.historial}
-          onBack={handleGoToMenu}
+          tema={quizActual.tema}
+          onVolver={handleVolverDeRevision} // Usamos la nueva función
         />
       </div>
     );
@@ -116,7 +126,7 @@ function App() {
             type="text" 
             placeholder="Tu nombre aquí..." 
             className="name-input" 
-            value={nombreAlumno} 
+            value={nombreAlumno}
             onChange={(e) => setNombreAlumno(e.target.value)} 
           />
         </div>
