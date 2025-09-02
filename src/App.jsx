@@ -1,6 +1,3 @@
-// ARCHIVO: src/App.jsx
-// INSTRUCCIÓN: REEMPLAZA TODO EL CÓDIGO CON ESTE.
-
 import React, { useState } from 'react';
 import Quiz from './Quiz';
 import PantallaFinal from './PantallaFinal';
@@ -23,6 +20,16 @@ function App() {
   const [quizActual, setQuizActual] = useState({ tema: null, reactivos: [] });
   const [resultadoActual, setResultadoActual] = useState({ puntuacion: 0, historial: [] });
   const [revisionRealizada, setRevisionRealizada] = useState(false);
+  const [nombreIntroducido, setNombreIntroducido] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(prevMode => !prevMode);
+  };
+
+  const handleSelectTopics = () => {
+    setVistaActual('topicSelection');
+  };
 
   const handleSelectTema = (nombreTema) => {
     const reactivosFiltrados = reactivosConExplicacion.filter(r => r.tema === nombreTema);
@@ -30,7 +37,7 @@ function App() {
     const reactivosParaQuiz = reactivosBarajados.slice(0, 10);
     setQuizActual({ tema: nombreTema, reactivos: reactivosParaQuiz });
     setVistaActual('quiz');
-    setRevisionRealizada(false); // Reiniciamos el estado de revisión
+    setRevisionRealizada(false);
   };
 
   const handleQuizFinish = (puntuacion, historial) => {
@@ -44,7 +51,7 @@ function App() {
 
   const handleVolverDeRevision = () => {
     setVistaActual('resultados');
-    setRevisionRealizada(true); // Marcamos que la revisión fue hecha
+    setRevisionRealizada(true);
   };
 
   const handleGoToSend = () => {
@@ -53,97 +60,143 @@ function App() {
   
   const handleGoToMenu = () => {
     setVistaActual('menu');
+    setNombreIntroducido(false);
   };
 
+  const handleStart = () => {
+    if (nombreAlumno.trim()) {
+      setNombreIntroducido(true);
+    }
+  };
+
+  const renderHeader = (title) => (
+    <header className="app-header">
+      <img src="/logo-jaguar.png" alt="Logo Máticas Jaguar" className="logo" />
+      <h1>{title}</h1>
+      <button onClick={toggleDarkMode} className="dark-mode-toggle">
+        {isDarkMode ? 'Modo Claro' : 'Modo Oscuro'}
+      </button>
+    </header>
+  );
+
+  let content;
+
   if (vistaActual === 'quiz') {
-    return (
-      <div className="App">
-        <Quiz
-          reactivos={quizActual.reactivos}
-          onQuizFinish={handleQuizFinish}
-          onGoToMenu={handleGoToMenu}
-        />
-      </div>
+    content = (
+      <Quiz
+        reactivos={quizActual.reactivos}
+        onQuizFinish={handleQuizFinish}
+        onGoToMenu={handleGoToMenu}
+      />
     );
   }
 
   if (vistaActual === 'resultados') {
-    return (
-      <div className="App">
-        <PantallaFinal
-          score={resultadoActual.puntuacion}
-          total={quizActual.reactivos.length}
-          onRestart={handleGoToMenu}
-          onVerRevision={handleVerRevision}
-          onEnviar={handleGoToSend}
-          revisionRealizada={revisionRealizada} // Pasamos el estado
-          tema={quizActual.tema}
-        />
-      </div>
+    content = (
+      <PantallaFinal
+        score={resultadoActual.puntuacion}
+        total={quizActual.reactivos.length}
+        onRestart={handleGoToMenu}
+        onVerRevision={handleVerRevision}
+        onEnviar={handleGoToSend}
+        revisionRealizada={revisionRealizada}
+        tema={quizActual.tema}
+      />
     );
   }
 
   if (vistaActual === 'revision') {
-    return (
-      <div className="App">
-        <PantallaRevision
-          historial={resultadoActual.historial}
-          tema={quizActual.tema}
-          onVolver={handleVolverDeRevision} // Usamos la nueva función
-        />
-      </div>
+    content = (
+      <PantallaRevision
+        historial={resultadoActual.historial}
+        tema={quizActual.tema}
+        onVolver={handleVolverDeRevision}
+      />
     );
   }
 
   if (vistaActual === 'enviar') {
-    return (
-      <div className="App">
-        <PantallaEnviar
-          nombre={nombreAlumno}
-          score={resultadoActual.puntuacion}
-          total={quizActual.reactivos.length}
-          tema={quizActual.tema}
-          onBack={() => setVistaActual('resultados')}
-        />
+    content = (
+      <PantallaEnviar
+        nombre={nombreAlumno}
+        score={resultadoActual.puntuacion}
+        total={quizActual.reactivos.length}
+        tema={quizActual.tema}
+        onBack={() => setVistaActual('resultados')}
+      />
+    );
+  }
+
+  if (vistaActual === 'menu') {
+    content = (
+      <div className="menu-principal">
+        {!nombreIntroducido ? (
+          <div className="name-input-section">
+            <blockquote className="motivational-quote">
+              "Las matemáticas son el alfabeto con el cual Dios ha escrito el Universo".
+              <footer>- Galileo Galilei</footer>
+            </blockquote>
+            <h2 className="input-prompt-heading">Escribe tu nombre para empezar:</h2>
+            <input 
+              type="text" 
+              placeholder="Tu nombre aquí..." 
+              className="name-input" 
+              value={nombreAlumno}
+              onChange={(e) => setNombreAlumno(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleStart()}
+            />
+             <button 
+              onClick={handleStart}
+              disabled={!nombreAlumno.trim()}
+              className="start-btn"
+            >
+              Continuar
+            </button>
+          </div>
+        ) : (
+          <div className="main-menu-buttons">
+            <h2>¡Hola, {nombreAlumno}!</h2>
+            <button className="menu-btn menu-btn--multiline">
+              Ejercicios
+integradores de
+aprendizaje
+            </button>
+            <button 
+              onClick={handleSelectTopics} 
+              className="menu-btn"
+            >
+              Temas a evaluar
+            </button>
+          </div>
+        )}
       </div>
     );
   }
 
-  const temasDisponibles = [...new Set(reactivosConExplicacion.map(r => r.tema))];
-
-  return (
-    <div className="App">
-      <header className="app-header">
-        <img src="/logo-jaguar.png" alt="Logo Máticas Jaguar" className="logo" />
-        <h1>I learn math</h1>
-        <p>Creado por Jairo Farrera</p>
-      </header>
-      
+  if (vistaActual === 'topicSelection') {
+    const temasDisponibles = [...new Set(reactivosConExplicacion.map(r => r.tema))];
+    content = (
       <div className="menu-principal">
-        <div className="name-container">
-          <h2>Escribe tu nombre para empezar:</h2>
-          <input 
-            type="text" 
-            placeholder="Tu nombre aquí..." 
-            className="name-input" 
-            value={nombreAlumno}
-            onChange={(e) => setNombreAlumno(e.target.value)} 
-          />
-        </div>
-        <h1>Selecciona un Tema</h1>
         <div className="temas-container">
           {temasDisponibles.map(nombreTema => (
             <button 
               key={nombreTema} 
               onClick={() => handleSelectTema(nombreTema)} 
-              disabled={!nombreAlumno.trim()}
               className="tema-btn"
             >
               {nombreTema}
             </button>
           ))}
         </div>
+        <button onClick={handleGoToMenu} className="back-to-main-menu-btn">Volver al Menú Principal</button>
       </div>
+    );
+  }
+
+  return (
+    <div className={`App ${isDarkMode ? 'dark-mode' : ''}`}>
+      {renderHeader(vistaActual === 'topicSelection' ? 'Selecciona un Tema' : 'I learn math')}
+      {content}
     </div>
   );
 }
