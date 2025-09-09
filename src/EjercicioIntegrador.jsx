@@ -23,7 +23,7 @@ const EjercicioIntegrador = ({ onRegresar, nombreAlumno, groupKey }) => {
       formData.append('archivo', archivo);
 
       try {
-        const response = await fetch('/api/upload', {
+        const response = await fetch(`${window.location.origin}/api/upload`, {
           method: 'POST',
           body: formData,
         });
