@@ -15,3 +15,7 @@
   from = "/api/*"
   to = "/.netlify/functions/server/:splat"
   status = 200
+
+# Plugin para instalar dependencias de las funciones
+[[plugins]]
+  package = "@netlify/plugin-functions-install-core"
