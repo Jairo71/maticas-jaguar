@@ -28,95 +28,130 @@ function EjercicioIntegradorDetalle({ ejercicioId, onRegresar, onSave, user, gro
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
+    console.log("Componente de detalle montado. Usuario:", user);
     setArchivoAdjuntoConsigna1(null);
     setArchivoAdjuntoConsigna2(null);
     setIsSubmitting(false);
-  }, [ejercicioId]);
+  }, [ejercicioId, user]);
 
   const handleFileChangeConsigna1 = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
-
+    console.log("Archivo seleccionado para consigna 1:", file.name);
     if (file.type.startsWith('image/')) {
       try {
-        const options = {
-          maxSizeMB: 1,           // (max file size in MB)
-          maxWidthOrHeight: 1920, // (max width or height)
-          useWebWorker: true      // (use web worker for compression)
-        };
+        const options = { maxSizeMB: 1, maxWidthOrHeight: 1920, useWebWorker: true };
         const compressedFile = await imageCompression(file, options);
+        console.log("Imagen comprimida para consigna 1");
         setArchivoAdjuntoConsigna1(compressedFile);
       } catch (error) {
         console.error('Error al comprimir la imagen:', error);
-        setArchivoAdjuntoConsigna1(file); // Fallback to original file if compression fails
+        setArchivoAdjuntoConsigna1(file);
       }
     } else {
       setArchivoAdjuntoConsigna1(file);
     }
   };
+
   const handleFileChangeConsigna2 = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
-
+    console.log("Archivo seleccionado para consigna 2:", file.name);
     if (file.type.startsWith('image/')) {
       try {
-        const options = {
-          maxSizeMB: 1,
-          maxWidthOrHeight: 1920,
-          useWebWorker: true
-        };
+        const options = { maxSizeMB: 1, maxWidthOrHeight: 1920, useWebWorker: true };
         const compressedFile = await imageCompression(file, options);
+        console.log("Imagen comprimida para consigna 2");
         setArchivoAdjuntoConsigna2(compressedFile);
       } catch (error) {
         console.error('Error al comprimir la imagen:', error);
-        setArchivoAdjuntoConsigna2(file); // Fallback to original file if compression fails
+        setArchivoAdjuntoConsigna2(file);
       }
     } else {
       setArchivoAdjuntoConsigna2(file);
     }
   };
 
-  
-
-  const uploadFile = async (file, defaultName) => {
-    if (!file || !user) return null;
-    let fileToUpload = file;
-    if (typeof file === 'string' && file.startsWith('blob:')) {
-      const blob = await fetch(file).then(res => res.blob());
-      fileToUpload = new File([blob], defaultName, { type: blob.type });
+  const uploadFile = async (file, consignaName) => {
+    if (!file) {
+      console.log(`No hay archivo para ${consignaName}, saltando subida.`);
+      return null;
     }
-    if (!(fileToUpload instanceof File)) return null;
+    if (!user || !user.uid) {
+      console.error('Error Crítico: El objeto de usuario o user.uid no está disponible en uploadFile.');
+      return null;
+    }
+
+    console.log(`Iniciando subida para ${consignaName}...`);
     try {
-      const filePath = `uploads/${user.uid}/${Date.now()}-${fileToUpload.name}`;
+      const filePath = `uploads/${user.uid}/${Date.now()}-${file.name}`;
       const fileRef = ref(storage, filePath);
-      const snapshot = await uploadBytes(fileRef, fileToUpload);
-      return await getDownloadURL(snapshot.ref);
+      const snapshot = await uploadBytes(fileRef, file);
+      const downloadURL = await getDownloadURL(snapshot.ref);
+      console.log(`Subida para ${consignaName} exitosa. URL:`, downloadURL);
+      return downloadURL;
     } catch (error) {
-      console.error('Error al subir archivo:', error);
+      console.error(`Error al subir archivo para ${consignaName}:`, error);
+      alert(`Hubo un error al subir el archivo para ${consignaName}. Revisa la consola para más detalles.`);
       return null;
     }
   };
 
   const handleGuardarYEnviar = async () => {
-    if (!user) return alert('Debes iniciar sesión para poder enviar.');
+    if (!user) {
+      alert('Error: Debes iniciar sesión para poder enviar tus resultados. Por favor, regresa y vuelve a entrar.');
+      return;
+    }
+    
     setIsSubmitting(true);
+    console.log("Iniciando proceso de guardado y envío...");
 
-    const uploadedFileUrl1 = await uploadFile(archivoAdjuntoConsigna1, 'adjunto_1');
-    const uploadedFileUrl2 = ejercicio.consigna2 ? await uploadFile(archivoAdjuntoConsigna2, 'adjunto_2') : null;
+    const uploadedFileUrl1 = await uploadFile(archivoAdjuntoConsigna1, 'Consigna 1');
+    const uploadedFileUrl2 = ejercicio.consigna2 ? await uploadFile(archivoAdjuntoConsigna2, 'Consigna 2') : null;
 
+    console.log("Guardando en Firestore...");
     try {
       await addDoc(collection(db, "submissions"), {
         userId: user.uid, userEmail: user.email, userName: user.displayName || '',
         groupKey, ejercicioId: ejercicio.id, ejercicioTitle: ejercicio.title,
-        fileUrlConsigna1: uploadedFileUrl1, fileUrlConsigna2: uploadedFileUrl2,
+        fileUrlConsigna1: uploadedFileUrl1,
+        fileUrlConsigna2: uploadedFileUrl2,
         createdAt: serverTimestamp()
       });
+      console.log("Datos guardados en Firestore con éxito.");
     } catch (error) {
       console.error("Error al guardar en Firestore: ", error);
+      alert("Hubo un error al guardar tus resultados en la base de datos.");
       setIsSubmitting(false);
       return;
     }
 
+    // Generar y abrir WhatsApp
+    const numeroMaestro = '529671391177'; // TODO: Hacer este número dinámico basado en el groupKey
+    const nombreAlumno = user.displayName || user.email;
+    let mensaje = `*Resultados del Ejercicio Integrador de ${nombreAlumno} (${groupKey}):*\n\n*${ejercicio.title}*\n\n`;
+
+    mensaje += `*Consigna 1:*\n${ejercicio.consigna1}\n`;
+    if (uploadedFileUrl1) {
+      mensaje += `*Archivo Adjunto:* ${uploadedFileUrl1}\n\n`;
+    } else {
+      mensaje += `*Respuesta:* No se adjuntó archivo.\n\n`;
+    }
+
+    if (ejercicio.consigna2) {
+      mensaje += `*Consigna 2:*\n${ejercicio.consigna2}\n`;
+      if (uploadedFileUrl2) {
+        mensaje += `*Archivo Adjunto:* ${uploadedFileUrl2}`;
+      } else {
+        mensaje += `*Respuesta:* No se adjuntó archivo.`;
+      }
+    }
+
+    console.log("Generando enlace de WhatsApp...");
+    const urlWhatsApp = `https://wa.me/${numeroMaestro}?text=${encodeURIComponent(mensaje)}`;
+    window.open(urlWhatsApp, '_blank');
+
+    console.log("Proceso completado.");
     onSave(null, null, uploadedFileUrl1, uploadedFileUrl2, null, null);
     setIsSubmitting(false);
   };
@@ -124,8 +159,6 @@ function EjercicioIntegradorDetalle({ ejercicioId, onRegresar, onSave, user, gro
   if (!ejercicio) {
     return <div className="text-center p-10">Ejercicio no encontrado.</div>;
   }
-
-  
 
   return (
     <div className="ejercicio-integrador-container">
