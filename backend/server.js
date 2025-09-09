@@ -4,7 +4,29 @@ const { google } = require('googleapis');
 const cors = require('cors');
 const multer = require('multer');
 const admin = require('firebase-admin');
-const serviceAccount = require('./credentials.json'); // Path to your service account key
+
+// --- Smart Credential Loading ---
+let serviceAccount;
+// Check if running in Netlify environment and the variable is set
+if (process.env.GOOGLE_CREDENTIALS_JSON) {
+  try {
+    // Parse the credentials from the environment variable
+    serviceAccount = JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON);
+  } catch (e) {
+    console.error('Error parsing GOOGLE_CREDENTIALS_JSON:', e);
+    // Exit if credentials can't be parsed in production
+    process.exit(1);
+  }
+} else {
+  // Fallback to local credentials file for local development
+  try {
+    serviceAccount = require('./credentials.json');
+  } catch (e) {
+    console.error('Could not load local credentials.json. Make sure the file exists in the /backend directory.');
+    // Exit if credentials can't be loaded locally
+    process.exit(1);
+  }
+}
 
 const app = express();
 
@@ -28,12 +50,12 @@ const upload = multer({
 app.use(cors());
 app.use(express.json());
 
-// --- Endpoints de Google Sheets (sin cambios) ---
+// --- Endpoints de Google Sheets ---
 const SPREADSHEET_ID = '1majtC72_kwtFzAbye8hUMtDEj0ZyQtGjPpdjVpHYX_Y';
 
 async function getGoogleSheetsClient() {
   const auth = new google.auth.GoogleAuth({
-    keyFile: 'credentials.json',
+    credentials: serviceAccount, // Use the credentials object directly
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
   });
 
@@ -71,12 +93,6 @@ app.post('/submit-results', async (req, res) => {
 });
 
 // --- File Upload Endpoint ---
-// Note: The path for the endpoint is now just '/', because Netlify's redirect
-// already includes the '/api/upload' part and maps it to this function.
-// The full path is determined by the folder/file structure: /backend/server.js -> /.netlify/functions/server
-// The redirect from /api/* maps to /.netlify/functions/server/*
-// So a request to /api/upload will be handled by the '/' route in the express app.
-// Let's adjust the endpoint to be more specific to avoid ambiguity.
 app.post('/upload', upload.single('archivo'), async (req, res) => {
   try {
     if (!req.file) {
