@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { auth, db } from './firebaseConfig';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+
+import Auth from './Auth';
 import Quiz from './Quiz';
-import PantallaFinal from './PantallaFinal';
-import PantallaRevision from './PantallaRevision';
-import PantallaEnviar from './PantallaEnviar';
+import EjercicioIntegradorDetalle from './EjercicioIntegradorDetalle';
+import PantallaResultadosUnificada from './PantallaResultadosUnificada';
+import SeleccionEjercicioIntegrador from './SeleccionEjercicioIntegrador';
+import GeneradorClave from './GeneradorClave';
+import VisorResultados from './VisorResultados';
+import PantallaResultadosHistoricos from './PantallaResultadosHistoricos'; // NEW IMPORT
 import { reactivosConExplicacion } from './data/reactivos';
+import { ejerciciosIntegradores } from './data/ejerciciosIntegradores';
 
 function barajarArray(array) {
   let arrayCopiado = [...array];
@@ -15,188 +24,200 @@ function barajarArray(array) {
 }
 
 function App() {
-  const [nombreAlumno, setNombreAlumno] = useState('');
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [groupKey, setGroupKey] = useState('');
   const [vistaActual, setVistaActual] = useState('menu');
-  const [quizActual, setQuizActual] = useState({ tema: null, reactivos: [] });
-  const [resultadoActual, setResultadoActual] = useState({ puntuacion: 0, historial: [] });
-  const [revisionRealizada, setRevisionRealizada] = useState(false);
-  const [nombreIntroducido, setNombreIntroducido] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [quizActual, setQuizActual] = useState({ tema: null, reactivos: [] });
+  const [ejercicioActualId, setEjercicioActualId] = useState(null);
+  const [unifiedResult, setUnifiedResult] = useState(null);
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(prevMode => !prevMode);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const toggleDarkMode = () => setIsDarkMode(prevMode => !prevMode);
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    setVistaActual('menu');
   };
 
-  const handleSelectTopics = () => {
-    setVistaActual('topicSelection');
+  const handleGoToMenu = () => setVistaActual('menu');
+  const handleGoToGenerarClave = () => setVistaActual('generarClave');
+  const handleGoToVerResultados = () => setVistaActual('verResultados');
+  const handleSelectTopics = () => setVistaActual('topicSelection');
+  const handleSelectEjercicioIntegrador = () => setVistaActual('seleccionEjercicio');
+  const handleGoToHistoricalResults = () => setVistaActual('historicalResults'); // NEW FUNCTION
+
+  const handleEjercicioSelect = (id) => {
+    setEjercicioActualId(id);
+    setVistaActual('ejercicioIntegrador');
   };
 
   const handleSelectTema = (nombreTema) => {
     const reactivosFiltrados = reactivosConExplicacion.filter(r => r.tema === nombreTema);
-    const reactivosBarajados = barajarArray(reactivosFiltrados);
-    const reactivosParaQuiz = reactivosBarajados.slice(0, 10);
-    setQuizActual({ tema: nombreTema, reactivos: reactivosParaQuiz });
+    const reactivosBarajados = barajarArray(reactivosFiltrados).slice(0, 10);
+    setQuizActual({ tema: nombreTema, reactivos: reactivosBarajados });
     setVistaActual('quiz');
-    setRevisionRealizada(false);
   };
 
-  const handleQuizFinish = (puntuacion, historial) => {
-    setResultadoActual({ puntuacion, historial });
-    setVistaActual('resultados');
-  };
+  const handleQuizFinish = async (puntuacion, historial) => {
+    const resultData = {
+      puntuacion,
+      historial,
+      total: quizActual.reactivos.length,
+      tema: quizActual.tema,
+      studentName: user.displayName || user.email,
+      groupKey: groupKey, // Este ahora es la Clave de la Clase
+      userId: user.uid,
+      type: 'quiz',
+      createdAt: serverTimestamp()
+    };
 
-  const handleVerRevision = () => {
-    setVistaActual('revision');
-  };
-
-  const handleVolverDeRevision = () => {
-    setVistaActual('resultados');
-    setRevisionRealizada(true);
-  };
-
-  const handleGoToSend = () => {
-    setVistaActual('enviar');
-  };
-  
-  const handleGoToMenu = () => {
-    setVistaActual('menu');
-    setNombreIntroducido(false);
-  };
-
-  const handleStart = () => {
-    if (nombreAlumno.trim()) {
-      setNombreIntroducido(true);
+    try {
+      await addDoc(collection(db, "resultados"), resultData);
+    } catch (error) {
+      console.error("Error al guardar el resultado del quiz: ", error);
     }
+
+    setUnifiedResult({ type: 'quiz', data: resultData });
+    setVistaActual('resultadosUnificados');
+  };
+
+  const handleSaveIntegratedExercise = async (arg1, arg2, file1, file2, audio1, audio2) => {
+    const ejercicio = ejerciciosIntegradores.find(e => e.id === ejercicioActualId);
+    const resultData = {
+      ejercicioTitulo: ejercicio.title,
+      argumentosConsigna1: arg1,
+      argumentosConsigna2: arg2,
+      fileUrlConsigna1: file1,
+      fileUrlConsigna2: file2,
+      audioUrl1: audio1,
+      audioUrl2: audio2,
+      studentName: user.displayName || user.email,
+      groupKey: groupKey, // Este ahora es la Clave de la Clase
+      userId: user.uid,
+      type: 'integrador',
+      createdAt: serverTimestamp()
+    };
+
+    try {
+      await addDoc(collection(db, "resultados"), resultData);
+    } catch (error) {
+      console.error("Error al guardar el ejercicio integrador: ", error);
+    }
+
+    setUnifiedResult({ type: 'integrador', data: resultData });
+    setVistaActual('resultadosUnificados');
   };
 
   const renderHeader = (title) => (
     <header className="app-header">
       <img src="/logo-jaguar.png" alt="Logo Máticas Jaguar" className="logo" />
-      <h1>{title}</h1>
-      <button onClick={toggleDarkMode} className="dark-mode-toggle">
-        {isDarkMode ? 'Modo Claro' : 'Modo Oscuro'}
-      </button>
+      <div>
+        <h1>{title}</h1>
+        <p className="text-center text-lg font-semibold text-gray-600 dark:text-white mb-4">Creado por: Jairo Farrera</p>
+      </div>
+      <div className="absolute top-4 right-4 flex items-center space-x-4">
+        <button onClick={toggleDarkMode} className="btn-3d btn-gray text-xs">{isDarkMode ? 'Modo Claro' : 'Modo Oscuro'}</button>
+        {user && <button onClick={handleLogout} className="btn-3d btn-red text-xs">Cerrar Sesión</button>}
+      </div>
     </header>
   );
 
-  let content;
+  const getHeaderTitle = () => {
+    if (vistaActual === 'generarClave' || vistaActual === 'verResultados') return 'Portal para Maestros';
+    if (!user) return 'Bienvenido a Máticas Jaguar';
+    switch (vistaActual) {
+      case 'topicSelection': return 'Selecciona un Tema';
+      case 'quiz': return `Tema: ${quizActual.tema}`;
+      case 'seleccionEjercicio': return 'Ejercicios Integradores';
+      case 'ejercicioIntegrador': return 'Resolviendo Ejercicio';
+      case 'resultadosUnificados': return 'Resultados de la Evaluación';
+      case 'historicalResults': return 'Mis Resultados Históricos'; // NEW CASE
+      default: return 'Máticas Jaguar';
+    }
+  };
 
-  if (vistaActual === 'quiz') {
-    content = (
-      <Quiz
-        reactivos={quizActual.reactivos}
-        onQuizFinish={handleQuizFinish}
-        onGoToMenu={handleGoToMenu}
-      />
-    );
-  }
+  const renderContent = () => {
+    if (loading) {
+      return <div className="text-center p-10">Cargando...</div>;
+    }
 
-  if (vistaActual === 'resultados') {
-    content = (
-      <PantallaFinal
-        score={resultadoActual.puntuacion}
-        total={quizActual.reactivos.length}
-        onRestart={handleGoToMenu}
-        onVerRevision={handleVerRevision}
-        onEnviar={handleGoToSend}
-        revisionRealizada={revisionRealizada}
-        tema={quizActual.tema}
-      />
-    );
-  }
+    if (vistaActual === 'generarClave') {
+      return <GeneradorClave onRegresar={handleGoToMenu} />;
+    }
+    if (vistaActual === 'verResultados') {
+      return <VisorResultados onRegresar={handleGoToMenu} />;
+    }
 
-  if (vistaActual === 'revision') {
-    content = (
-      <PantallaRevision
-        historial={resultadoActual.historial}
-        tema={quizActual.tema}
-        onVolver={handleVolverDeRevision}
-      />
-    );
-  }
+    if (user) {
+      switch (vistaActual) {
+        case 'quiz':
+          return <Quiz reactivos={quizActual.reactivos} onQuizFinish={handleQuizFinish} onGoToMenu={handleGoToMenu} />;
+        case 'topicSelection':
+          const temas = [...new Set(reactivosConExplicacion.map(r => r.tema))];
+          return (
+            <div className="menu-principal">
+              <div className="temas-container">{temas.map(t => <button key={t} onClick={() => handleSelectTema(t)} className="btn-3d btn-blue">{t}</button>)}</div>
+              <button onClick={handleGoToMenu} className="btn-3d btn-gray mt-8">Volver al Menú</button>
+            </div>
+          );
+        case 'seleccionEjercicio':
+          return <SeleccionEjercicioIntegrador onSelectEjercicio={handleEjercicioSelect} onRegresar={handleGoToMenu} />;
+        case 'ejercicioIntegrador':
+          return <EjercicioIntegradorDetalle ejercicioId={ejercicioActualId} onRegresar={() => setVistaActual('seleccionEjercicio')} onSave={handleSaveIntegratedExercise} user={user} groupKey={groupKey} />;
+        case 'resultadosUnificados':
+          return <PantallaResultadosUnificada resultType={unifiedResult.type} resultData={unifiedResult.data} onGoToMenu={handleGoToMenu} />;
+        case 'historicalResults': // NEW CASE
+          return <PantallaResultadosHistoricos onRegresar={handleGoToMenu} />;
+        default: // menu principal logueado
+          return (
+            <div className="menu-principal">
+              <div className="main-menu-buttons">
+                <h2 className="welcome-heading dark:text-white">¡Hola, {user.displayName || user.email}!</h2>
+                <p className="text-center mb-4 text-orange-500 dark:text-white">Ingresa la Clave de la Clase</p>
+                <input type="text" placeholder="Clave de la Clase aquí..." className="name-input input-3d mb-6" value={groupKey} onChange={(e) => setGroupKey(e.target.value)} />
+                <button onClick={handleSelectEjercicioIntegrador} className="btn-3d btn-blue w-full max-w-md">Ejercicios integradores de aprendizaje</button>
+                <button onClick={handleSelectTopics} className="btn-3d btn-blue w-full max-w-md mt-4">Evaluación de Contenidos</button>
+                <button onClick={handleGoToHistoricalResults} className="btn-3d btn-blue w-full max-w-md mt-4">Mis Resultados Históricos</button> // NEW BUTTON
+              </div>
+            </div>
+          );
+      }
+    }
 
-  if (vistaActual === 'enviar') {
-    content = (
-      <PantallaEnviar
-        nombre={nombreAlumno}
-        score={resultadoActual.puntuacion}
-        total={quizActual.reactivos.length}
-        tema={quizActual.tema}
-        onBack={() => setVistaActual('resultados')}
-      />
-    );
-  }
-
-  if (vistaActual === 'menu') {
-    content = (
+    // Pantalla de inicio para usuarios no logueados
+    return (
       <div className="menu-principal">
-        {!nombreIntroducido ? (
-          <div className="name-input-section">
-            <blockquote className="motivational-quote">
-              "Las matemáticas son el alfabeto con el cual Dios ha escrito el Universo".
-              <footer>- Galileo Galilei</footer>
-            </blockquote>
-            <h2 className="input-prompt-heading">Escribe tu nombre para empezar:</h2>
-            <input 
-              type="text" 
-              placeholder="Tu nombre aquí..." 
-              className="name-input" 
-              value={nombreAlumno}
-              onChange={(e) => setNombreAlumno(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleStart()}
-            />
-             <button 
-              onClick={handleStart}
-              disabled={!nombreAlumno.trim()}
-              className="start-btn"
-            >
-              Continuar
+        <Auth />
+        <div className="mt-8 pt-6 border-t border-gray-300 dark:border-gray-600">
+          <div className="text-center space-y-2">
+             <button onClick={handleGoToGenerarClave} className="text-blue-600 dark:text-blue-400 hover:underline">
+              ¿Eres maestro? Genera tu clave aquí
+            </button>
+            <br />
+            <button onClick={handleGoToVerResultados} className="text-green-600 dark:text-green-400 hover:underline">
+              Ver Resultados (Maestros)
             </button>
           </div>
-        ) : (
-          <div className="main-menu-buttons">
-            <h2>¡Hola, {nombreAlumno}!</h2>
-            <button className="menu-btn menu-btn--multiline">
-              Ejercicios
-integradores de
-aprendizaje
-            </button>
-            <button 
-              onClick={handleSelectTopics} 
-              className="menu-btn"
-            >
-              Temas a evaluar
-            </button>
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  if (vistaActual === 'topicSelection') {
-    const temasDisponibles = [...new Set(reactivosConExplicacion.map(r => r.tema))];
-    content = (
-      <div className="menu-principal">
-        <div className="temas-container">
-          {temasDisponibles.map(nombreTema => (
-            <button 
-              key={nombreTema} 
-              onClick={() => handleSelectTema(nombreTema)} 
-              className="tema-btn"
-            >
-              {nombreTema}
-            </button>
-          ))}
         </div>
-        <button onClick={handleGoToMenu} className="back-to-main-menu-btn">Volver al Menú Principal</button>
       </div>
     );
-  }
+  };
 
   return (
-    <div className={`App ${isDarkMode ? 'dark-mode' : ''}`}>
-      {renderHeader(vistaActual === 'topicSelection' ? 'Selecciona un Tema' : 'I learn math')}
-      {content}
+    <div className={`App ${isDarkMode ? 'dark' : ''}`}>
+      {renderHeader(getHeaderTitle())}
+      <main className="app-main-content">
+        {renderContent()}
+      </main>
     </div>
   );
 }

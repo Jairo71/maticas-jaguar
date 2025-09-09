@@ -2,7 +2,7 @@
 // INSTRUCCIÓN: REEMPLAZA TODO EL CÓDIGO CON ESTE.
 
 import React, { useState } from 'react';
-import OpcionTexto from './OpcionTexto';
+import FormatoRespuesta from './FormatoRespuesta';
 
 // --- ¡NUEVO! Creamos el objeto de audio fuera del componente ---
 // Esto es más eficiente porque el archivo de sonido se carga una sola vez.
@@ -90,7 +90,7 @@ const Quiz = ({ reactivos, onQuizFinish, onGoToMenu }) => {
                         className="opcion-btn-grid"
                         onClick={() => handleSeleccionarRespuesta(opcion)}
                     >
-                        <OpcionTexto texto={opcion} />
+                        <FormatoRespuesta texto={opcion} />
                     </button>
                 ))}
             </div>

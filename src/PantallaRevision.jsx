@@ -1,6 +1,6 @@
-
 import React, { useEffect, useRef } from 'react';
 import { retroalimentacionPorTema } from './data/retroalimentacion';
+import FormatoRespuesta from './FormatoRespuesta';
 
 function PantallaRevision({ historial, tema, onVolver }) {
   const respuestasIncorrectas = historial.filter(item => !item.esCorrecta);
@@ -37,21 +37,23 @@ function PantallaRevision({ historial, tema, onVolver }) {
 
   if (respuestasIncorrectas.length === 0) {
     return (
-      <div className="revision-page-container all-correct-container">
+      <div className="ejercicio-integrador-container all-correct-container">
         <audio ref={audioRef} src="/urra.mp3" preload="auto" />
         <img src="/logo-jaguar.png" alt="Felicitaciones" className="felicitaciones-jaguar" />
         <h1 className="revision-title">¡Felicidades, eres un Maestro Jaguar!</h1>
         <p className="felicitaciones-texto">¡Has respondido correctamente a todas las preguntas!</p>
         <p className="felicitaciones-texto">Tu dedicación y agilidad mental son impresionantes. ¡Ningún desafío es demasiado grande para ti!</p>
-        <button onClick={onVolver} className="final-button menu-button">
-          Volver
-        </button>
+        <div className="flex space-x-4 mt-8">
+          <button onClick={onVolver} className="btn-3d btn-gray">
+            Volver
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="revision-page-container">
+    <div className="ejercicio-integrador-container">
       <h1 className="revision-title">¡Afila tus garras, Jaguar!</h1>
       <p className="revision-subtitle">{obtenerMensajeDeAnimo()}</p>
       <p className="revision-subtitle">Aquí tienes la retroalimentación de los reactivos a mejorar:</p>
@@ -67,7 +69,7 @@ function PantallaRevision({ historial, tema, onVolver }) {
                 <img 
                   src={`/images/${preguntaActual.imagen}`} 
                   alt="Reactivo" 
-                  className="revision-imagen" 
+                  className="reactivo-imagen" 
                 />
               )}
               <p className="revision-pregunta">
@@ -76,13 +78,13 @@ function PantallaRevision({ historial, tema, onVolver }) {
               <div className="revision-respuestas">
                 <p>Tu respuesta: 
                   <span className='respuesta-incorrecta'>
-                    {` ${respuestaUsuario}`}
+                    <FormatoRespuesta texto={respuestaUsuario} />
                   </span>
                   {' ❌'}
                 </p>
                 <p>Respuesta correcta: 
                   <span className="respuesta-correcta">
-                    {` ${preguntaActual.respuesta_correcta}`}
+                    <FormatoRespuesta texto={preguntaActual.respuesta_correcta} />
                   </span>
                 </p>
               </div>
@@ -95,9 +97,11 @@ function PantallaRevision({ historial, tema, onVolver }) {
         })}
       </div>
       
-      <button onClick={onVolver} className="final-button menu-button">
-        Volver
-      </button>
+      <div className="flex space-x-4 mt-8">
+        <button onClick={onVolver} className="btn-3d btn-gray">
+          Volver
+        </button>
+      </div>
     </div>
   );
 }
