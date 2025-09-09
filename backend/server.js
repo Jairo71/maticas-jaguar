@@ -20,7 +20,8 @@ if (process.env.GOOGLE_CREDENTIALS_JSON) {
 } else {
   // Fallback to local credentials file for local development
   try {
-    serviceAccount = require('./credentials.json');
+    const credentialsPath = './credentials.json';
+    serviceAccount = require(credentialsPath);
   } catch (e) {
     console.error('Could not load local credentials.json. Make sure the file exists in the /backend directory.');
     // Exit if credentials can't be loaded locally
