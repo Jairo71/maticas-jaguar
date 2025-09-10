@@ -107,7 +107,21 @@ function EjercicioIntegradorDetalle({ ejercicioId, onRegresar, onSave, user, gro
     console.log("Iniciando proceso de guardado y envío...");
 
     const uploadedFileUrl1 = await uploadFile(archivoAdjuntoConsigna1, 'Consigna 1');
-    const uploadedFileUrl2 = ejercicio.consigna2 ? await uploadFile(archivoAdjuntoConsigna2, 'Consigna 2') : null;
+    if (archivoAdjuntoConsigna1 && !uploadedFileUrl1) {
+      console.log("La subida del archivo para Consigna 1 falló. El proceso se ha detenido.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    let uploadedFileUrl2 = null;
+    if (ejercicio.consigna2) {
+      uploadedFileUrl2 = await uploadFile(archivoAdjuntoConsigna2, 'Consigna 2');
+      if (archivoAdjuntoConsigna2 && !uploadedFileUrl2) {
+        console.log("La subida del archivo para Consigna 2 falló. El proceso se ha detenido.");
+        setIsSubmitting(false);
+        return;
+      }
+    }
 
     console.log("Guardando en Firestore...");
     try {
