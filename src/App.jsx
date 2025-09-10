@@ -214,12 +214,6 @@ function App() {
 
   return (
     <div className={`App ${isDarkMode ? 'dark' : ''}`}>
-      <div 
-        style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 9999, padding: '20px', backgroundColor: 'red', color: 'white', fontSize: '24px', cursor: 'pointer' }}
-        onClick={() => alert('¡El clic en el div de prueba funciona!')}
-      >
-        CLICK ME (TEST DIV)
-      </div>
       {renderHeader(getHeaderTitle())}
       <main className="app-main-content">
         {renderContent()}
