@@ -168,7 +168,7 @@ ${archivoUrl}`;
                 Regresar
             </button>
             <button
-                onClick={handleSubmit}
+                onClick={() => alert('Button clicked!')}
                 disabled={loading || (!texto && !archivo)}
                 className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 disabled:bg-gray-400 disabled:cursor-not-allowed dark:bg-blue-700 dark:hover:bg-blue-600"
             >
