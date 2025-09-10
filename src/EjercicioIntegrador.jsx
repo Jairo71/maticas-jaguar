@@ -10,6 +10,7 @@ const EjercicioIntegrador = ({ onRegresar, nombreAlumno, groupKey }) => {
   };
 
   const handleSubmit = async () => {
+    console.log('handleSubmit function called.');
     if (!texto && !archivo) {
       alert('Por favor, escribe una respuesta o adjunta un archivo.');
       return;
