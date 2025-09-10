@@ -18,24 +18,30 @@ const EjercicioIntegrador = ({ onRegresar, nombreAlumno, groupKey }) => {
     setLoading(true);
     let archivoUrl = '';
 
+    console.log('Before archivo check. Archivo:', archivo);
     if (archivo) {
+      console.log('Inside archivo check. Archivo exists.');
       const formData = new FormData();
       formData.append('archivo', archivo);
 
       try {
+        console.log('Before fetch call to /api/upload');
         const response = await fetch(`${window.location.origin}/api/upload`, {
           method: 'POST',
           body: formData,
         });
+        console.log('After fetch call. Response:', response);
 
         const data = await response.json();
         if (response.ok) {
           archivoUrl = data.fileUrl;
+          console.log('File uploaded successfully. URL:', archivoUrl);
         } else {
+          console.error('Upload failed with response:', data);
           throw new Error(data.message || 'Error al subir el archivo.');
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Error during file upload fetch:', error);
         alert(`Hubo un error al subir el archivo: ${error.message}`);
         setLoading(false);
         return;
