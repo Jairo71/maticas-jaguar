@@ -167,15 +167,14 @@ ${archivoUrl}`;
             >
                 Regresar
             </button>
-            <button
-                onClick={handleSubmit}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 disabled:bg-gray-400 disabled:cursor-not-allowed dark:bg-blue-700 dark:hover:bg-blue-600"
+            <div
+                onClick={() => alert('Large Div Clicked!')}
+                style={{ width: '100%', height: '100px', backgroundColor: 'red', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', fontSize: '24px', cursor: 'pointer' }}
             >
-                {loading ? 'Procesando...' : 'Generar y Enviar'}
-            </button>
+                CLICK ME (TEST DIV)
+            </div>
         </div>
       </div>
-      <button onClick={() => alert('Test Button Clicked!')} className="mt-4 p-2 bg-green-500 text-white rounded">Test Button</button>
     </div>
   );
 };
