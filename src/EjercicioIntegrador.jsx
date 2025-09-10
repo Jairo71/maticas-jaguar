@@ -168,13 +168,14 @@ ${archivoUrl}`;
                 Regresar
             </button>
             <button
-                onClick={() => alert('Button clicked!')}
+                onClick={handleSubmit}
                 className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 disabled:bg-gray-400 disabled:cursor-not-allowed dark:bg-blue-700 dark:hover:bg-blue-600"
             >
                 {loading ? 'Procesando...' : 'Generar y Enviar'}
             </button>
         </div>
       </div>
+      <button onClick={() => alert('Test Button Clicked!')} className="mt-4 p-2 bg-green-500 text-white rounded">Test Button</button>
     </div>
   );
 };
