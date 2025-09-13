@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import { getAuth } from 'firebase/auth';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from './firebaseConfig';
+import { handleFileUpload } from './firebaseUpload';
 
 const EjercicioIntegrador = ({ onRegresar, nombreAlumno, groupKey }) => {
   const [texto, setTexto] = useState('');
@@ -10,83 +14,58 @@ const EjercicioIntegrador = ({ onRegresar, nombreAlumno, groupKey }) => {
   };
 
   const handleSubmit = async () => {
-    console.log('handleSubmit function called.');
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!user) {
+      alert('Debes iniciar sesión para poder enviar tu respuesta.');
+      return;
+    }
+
     if (!texto && !archivo) {
       alert('Por favor, escribe una respuesta o adjunta un archivo.');
       return;
     }
 
     setLoading(true);
-    let archivoUrl = '';
-
-    console.log('Before archivo check. Archivo:', archivo);
-    if (archivo) {
-      console.log('Inside archivo check. Archivo exists.');
-      const formData = new FormData();
-      formData.append('archivo', archivo);
-
-      try {
-        console.log('Before fetch call to /api/upload');
-        const response = await fetch(`${window.location.origin}/api/upload`, {
-          method: 'POST',
-          body: formData,
-        });
-        console.log('After fetch call. Response:', response);
-
-        const data = await response.json();
-        if (response.ok) {
-          archivoUrl = data.fileUrl;
-          console.log('File uploaded successfully. URL:', archivoUrl);
-        } else {
-          console.error('Upload failed with response:', data);
-          throw new Error(data.message || 'Error al subir el archivo.');
-        }
-      } catch (error) {
-        console.error('Error during file upload fetch:', error);
-        alert(`Hubo un error al subir el archivo: ${error.message}`);
-        setLoading(false);
-        return;
-      }
-    }
-
-    const submission = {
-      id: new Date().toISOString(),
-      studentName: nombreAlumno,
-      group: groupKey,
-      text: texto,
-      fileUrl: archivoUrl,
-      timestamp: new Date().toLocaleString('es-MX'),
-    };
+    const exerciseId = 'ejercicio-integrador-violencia-genero'; // ID único para este ejercicio
 
     try {
-      const existingSubmissions = JSON.parse(localStorage.getItem('integradorSubmissions')) || [];
-      localStorage.setItem('integradorSubmissions', JSON.stringify([...existingSubmissions, submission]));
-      alert('¡Respuesta enviada y guardada localmente!');
+      let responseContent;
+      let responseType;
+
+      if (archivo) {
+        responseType = 'file';
+        // Llama a la función de subida de archivos que creamos
+        responseContent = await handleFileUpload(archivo, user.uid, exerciseId);
+      } else {
+        responseType = 'text';
+        responseContent = texto;
+      }
+      
+      // Guarda el registro de la entrega en Firestore
+      const submissionRecord = {
+        userId: user.uid,
+        userEmail: user.email,
+        studentName: nombreAlumno,
+        group: groupKey,
+        exerciseId: exerciseId,
+        response: responseContent, // La URL del archivo o el texto
+        responseType: responseType,
+        createdAt: new Date(),
+      };
+
+      await addDoc(collection(db, 'submissions'), submissionRecord);
+      
+      alert('¡Respuesta enviada con éxito!');
+      setLoading(false);
+      onRegresar();
+
     } catch (error) {
-      console.error('Error saving submission to localStorage:', error);
-      alert('Hubo un error al guardar la respuesta localmente.');
+      console.error("Error al enviar la respuesta:", error);
+      alert(`Hubo un error al enviar la respuesta: ${error.message}`);
+      setLoading(false);
     }
-
-    // IMPORTANTE: Reemplazar con el número de teléfono real del maestro, incluyendo el código de país.
-    const numeroMaestro = '521XXXXXXXXXX';
-    let mensaje = `*Respuesta del Ejercicio Integrador de ${nombreAlumno} (${groupKey}):*
-
-`;
-    if (texto) {
-      mensaje += `${texto}
-
-`;
-    }
-    if (archivoUrl) {
-      mensaje += `*Archivo Adjunto:*
-${archivoUrl}`;
-    }
-
-    const urlWhatsApp = `https://wa.me/${numeroMaestro}?text=${encodeURIComponent(mensaje)}`;
-
-    window.open(urlWhatsApp, '_blank');
-    setLoading(false);
-    onRegresar();
   };
 
   return (
@@ -132,10 +111,11 @@ ${archivoUrl}`;
         </div>
 
         <textarea
-          className="w-full h-40 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+          className="w-full h-40 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
           placeholder="Escribe tus argumentos aquí..."
           value={texto}
           onChange={(e) => setTexto(e.target.value)}
+          disabled={loading}
         />
 
         <div className="mt-4">
@@ -148,9 +128,9 @@ ${archivoUrl}`;
                 <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               <div className="flex text-sm text-gray-600 dark:text-gray-400">
-                <label htmlFor="file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
+                <label htmlFor="file-upload" className={`relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 ${loading ? 'cursor-not-allowed' : ''}`}>
                   <span>Sube un archivo</span>
-                  <input id="file-upload" name="file-upload" type="file" className="sr-only" onChange={handleFileChange} accept="image/*,application/pdf" />
+                  <input id="file-upload" name="file-upload" type="file" className="sr-only" onChange={handleFileChange} accept="image/*,application/pdf" disabled={loading} />
                 </label>
                 <p className="pl-1">o arrástralo aquí</p>
               </div>
@@ -163,16 +143,18 @@ ${archivoUrl}`;
         <div className="flex justify-between items-center mt-8">
             <button
                 onClick={onRegresar}
-                className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 dark:bg-gray-700 dark:hover:bg-gray-600"
+                className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 dark:bg-gray-700 dark:hover:bg-gray-600 disabled:opacity-50"
+                disabled={loading}
             >
                 Regresar
             </button>
-            <div
-                onClick={() => alert('Large Div Clicked!')}
-                style={{ width: '100%', height: '100px', backgroundColor: 'red', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', fontSize: '24px', cursor: 'pointer' }}
+            <button
+                onClick={handleSubmit}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 dark:bg-blue-500 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={loading}
             >
-                CLICK ME (TEST DIV)
-            </div>
+                {loading ? 'Enviando...' : 'Enviar Respuesta'}
+            </button>
         </div>
       </div>
     </div>
